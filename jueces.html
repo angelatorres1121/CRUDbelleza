@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <title>CRUD Jurado Calificador</title>
+
+    <style>
+       body {
+            background-color: black;
+            color: #556B2F;
+        }
+        table, table th, table td {
+            color: #556B2F !important;
+        }
+        .img-holder {
+            width: 200px;
+            height: 200px;
+            background-color: #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .img-holder img {
+            max-width: 100%;
+            max-height: 100%;
+        }
+    </style>
+  </head>
+  <body>
+    <!-- Titulo -->
+    <div class="row">
+        <div class="col-12">
+            <h1 class="display-4 text-center text-uppercase">Lista del Jurado Calificador</h1>
+        </div>
+    </div>
+
+    <!-- botones -->
+    <section class="p-3">
+        <div class="row">
+            <div class="col-12">
+                <button class="btn btn-primary newUser" data-bs-toggle="modal" data-bs-target="#userForm">Nuevo Juez <i class="bi-cpu-fill"></i></button>
+            </div>
+        </div>
+        <div class="row">
+         <div class="col-12">
+                <a href="candidatas.html" class="btn btn-primary newUser" >Lista de Candidatas <i class="bi bi-people"></i></a>
+            </div>   
+            
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <a href="index.html" class="btn btn-primary newUser">Pagina Principal <i class="bi-check-circle-fill"></i></a>
+            </div>   
+        </div>
+
+        <!-- Tabla -->
+        <div class="row">
+            <div class="col-12">
+                <table class="table table-striped table-hover mt-3 text-center table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Juez</th>
+                            <th>Fotografía</th>
+                            <th>Nombre</th>
+                            <th>Categoria a calificar</th>
+                            <th>Celular</th>
+                            <th>Experiencia</th>
+                            <th>Fecha de inscripción</th>
+                            <th>Opciones a:</th>
+                        </tr>
+                    </thead>
+                    <tbody id="data"></tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal Form para agregar/editar -->
+    <div class="modal fade" id="userForm">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Agregar/Editar Juez</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="judgeForm">
+                        <div class="card imgholder img-holder">
+                            <label for="imgInput" class="upload">
+                                <input type="file" id="imgInput" accept="image/*">
+                                <i class="bi bi-plus-circle-dotted"></i>
+                            </label>
+                            <img id="previewImg" src="./image/Profile Icon.webp" alt="" class="img" style="display:none;">
+                        </div>
+                        <div class="inputField">
+                            <div>
+                                <label for="name">Nombre:</label>
+                                <input type="text" id="name" required>
+                            </div>
+                            <div>
+                                <label for="category">Categoria a calificar:</label>
+                                <input type="text" id="category" required>
+                            </div>
+                            <div>
+                                <label for="phone">Celular:</label>
+                                <input type="text" id="phone" minlength="9" maxlength="9" required>
+                            </div>
+                            <div>
+                                <label for="experience">Experiencia:</label>
+                                <input type="text" id="experience" required>
+                            </div>
+                            <div>
+                                <label for="sDate">Fecha de inscripción:</label>
+                                <input type="date" id="sDate" required>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" form="judgeForm" class="btn btn-primary submit">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        let editingRow = null;
+
+        document.getElementById('imgInput').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = document.getElementById('previewImg');
+                    img.src = e.target.result;
+                    img.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        document.getElementById('judgeForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const name = document.getElementById('name').value;
+            const category = document.getElementById('category').value;
+            const phone = document.getElementById('phone').value;
+            const experience = document.getElementById('experience').value;
+            const sDate = document.getElementById('sDate').value;
+            const imgSrc = document.getElementById('previewImg').src;
+
+            if (editingRow) {
+                // Update existing row
+                editingRow.cells[2].textContent = name;
+                editingRow.cells[3].textContent = category;
+                editingRow.cells[4].textContent = phone;
+                editingRow.cells[5].textContent = experience;
+                editingRow.cells[6].textContent = sDate;
+                editingRow.cells[1].querySelector('img').src = imgSrc;
+
+                const modalInstance = bootstrap.Modal.getInstance(document.getElementById('userForm'));
+                modalInstance.hide();
+                editingRow = null; // Reset editingRow
+            } else {
+                // Create new row
+                const newRow = document.createElement('tr');
+                newRow.innerHTML = `
+                    <td>Nuevo Juez</td>
+                    <td><img src="${imgSrc}" width="50" height="50"></td>
+                    <td>${name}</td>
+                    <td>${category}</td>
+                    <td>${phone}</td>
+                    <td>${experience}</td>
+                    <td>${sDate}</td>
+                    <td>
+                        <button class="btn btn-info btn-sm viewBtn" data-bs-toggle="modal" data-bs-target="#viewJudgeModal">Ver</button>
+                        <button class="btn btn-warning btn-sm editBtn" data-bs-toggle="modal" data-bs-target="#userForm">Editar</button>
+                        <button class="btn btn-danger btn-sm deleteBtn">Eliminar</button>
+                    </td>
+                `;
+                document.getElementById('data').appendChild(newRow);
+                addEventListenersToRow(newRow);
+                
+                const modalInstance = bootstrap.Modal.getInstance(document.getElementById('userForm'));
+                modalInstance.hide();
+                document.getElementById('judgeForm').reset();
+                document.getElementById('previewImg').style.display = 'none';
+            }
+        });
+
+        function addEventListenersToRow(row) {
+            row.querySelector('.viewBtn').addEventListener('click', function() {
+                // Cargar datos en modal de ver
+                document.getElementById('viewName').value = row.cells[2].textContent;
+                document.getElementById('viewCategory').value = row.cells[3].textContent;
+                document.getElementById('viewPhone').value = row.cells[4].textContent;
+                document.getElementById('viewExperience').value = row.cells[5].textContent;
+                document.getElementById('viewSDate').value = row.cells[6].textContent;
+                document.getElementById('viewImg').src = row.cells[1].querySelector('img').src;
+            });
+
+            row.querySelector('.editBtn').addEventListener('click', function() {
+                // Cargar datos en el formulario para editar
+                document.getElementById('name').value = row.cells[2].textContent;
+                document.getElementById('category').value = row.cells[3].textContent;
+                document.getElementById('phone').value = row.cells[4].textContent;
+                document.getElementById('experience').value = row.cells[5].textContent;
+                document.getElementById('sDate').value = row.cells[6].textContent;
+                document.getElementById('previewImg').src = row.cells[1].querySelector('img').src;
+                editingRow = row; // Guardar la fila que se está editando
+            });
+
+            row.querySelector('.deleteBtn').addEventListener('click', function() {
+                if (confirm('¿Estás segura de que quieres eliminar este juez?')) {
+                    row.remove();
+                }
+            });
+        }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

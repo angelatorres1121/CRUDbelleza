@@ -1,0 +1,267 @@
+/* Import Google font - Poppins */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Roboto", sans-serif;
+}
+body {
+  min-height: 100vh;
+  background: #161616;
+}
+
+a {
+  text-decoration: none;
+  color: #556B2F;
+}
+
+ul {
+  list-style: none;
+}
+
+li{
+  list-style: none;
+  padding: 10px;
+}
+
+li:hover{
+  font-weight: bold;
+}
+
+a:hover {
+  font-weight: bold;
+  color: #e59191;
+}
+
+i{
+  padding: 15px;
+  font-size: 30px;
+}
+
+
+i:hover {
+  font-weight: bold;
+  cursor: pointer;
+  color: #e59191;
+}
+
+/* Pre css */
+.flex {
+  display: flex;
+  align-items: center;
+}
+.nav_image {
+  display: flex;
+  min-width: 55px;
+  justify-content: center;
+}
+.nav_image img {
+  height: 35px;
+  width: 35px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* Sidebar */
+.sidebar {
+  top: 0;
+  position: fixed;
+  width: 100%;
+  background: #fff;
+  padding: 15px 10px;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.1);
+  transition: all 0.4s ease;
+  background-color: #161616;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar.close {
+  width: calc(55px + 20px);
+}
+.logo_items {
+  gap: 8px;
+}
+.logo_name {
+  font-size: 42px;
+  color: #556B2F;
+  font-weight: 900;
+  transition: all 0.3s ease;
+}
+
+.menu i {
+  font-size: 40px;
+}
+
+.menu_container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.menu_items {
+  display: flex;
+  justify-content: space-between;
+}
+
+.menu_item {
+  display: flex;
+  flex-direction: column;
+  padding: 10px 20px;
+  border-radius: 5px;
+  justify-content: space-between;
+  display: none;
+}
+
+.menu:hover {
+  cursor: pointer;
+}
+
+
+.rigth-items-nav{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+
+}
+
+.search {
+  display: flex;
+  align-items: center;
+  border-radius: 5px;
+  margin-top: 10px;
+  display: relative;
+}
+
+.user-icon {
+  background-color: #743357;
+  border-radius: 10px;
+}
+
+
+.search_box {
+  border: none;
+  background-color: #2b2929;
+  width: 400px;
+  color: #fff;
+  padding: 10px;
+  margin-right: 10px;
+  margin-left: 10px;
+  border-radius: 10px;
+}
+
+.search_box{
+  display: none;
+}
+
+
+
+
+
+.contenedorP {
+  margin-top: 110px;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 100;
+  padding: 40px;
+}
+
+.peli-category {
+  padding: 20px;
+}
+
+.title {
+  padding: 30px 0px  20px 0px;
+  margin-bottom: 20px;
+}
+
+.pelis {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.Peli {
+  width: 300px;
+  height: 500px;
+  padding: 5px;
+  overflow: hidden;
+}
+
+.change-account {
+  background-color: #252424 ;
+  top: 0;
+  position: absolute;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  display: none;
+}
+
+.change-account h3 {
+  font-size: 50px;
+  color: #fff;
+  margin: 100px;
+  text-align: center;
+}
+
+.accounts {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.account {
+  background-color: #252424;
+  margin:  10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 300px;
+  height: 300px;
+}
+
+.account:hover {
+  cursor: pointer;
+  background-color: #2b2929;
+  border-radius: 10px;
+}
+
+.account .img {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  overflow: hidden;
+}
+
+.name {
+  font-size: 20px;
+  bottom: 0;
+  padding-top: 20px;
+  color: #8d8787;
+}
+
+
+.show {
+  display: block;
+}
+
+.dont-show {
+  display: none;
+}
